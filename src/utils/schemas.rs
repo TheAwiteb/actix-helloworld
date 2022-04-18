@@ -11,8 +11,6 @@ pub struct ParamsSchema {
 
 #[derive(Serialize, new)]
 pub struct RouteSchema {
-    #[new(value = "true")]
-    pub status: bool,
     pub endpoint: String,
     pub description: String,
     pub parameters: Option<Vec<ParamsSchema>>,
@@ -28,5 +26,7 @@ pub struct MessageSchema {
 
 #[derive(Serialize, new)]
 pub struct RoutesSchema {
+    #[new(value = "true")]
+    pub status: bool,
     pub endpoints: Vec<RouteSchema>,
 }

@@ -1,4 +1,5 @@
 use actix_web::{error::ResponseError, http::StatusCode, HttpResponse};
+use derive_new::new;
 use serde::Serialize;
 use thiserror::Error;
 
@@ -30,16 +31,14 @@ impl ResponseError for AppError {
 impl From<&AppError> for ErrorResponse {
     fn from(error: &AppError) -> Self {
         let status_code = error.status_code();
-        ErrorResponse {
-            code: status_code.as_u16(),
-            message: error.to_string(),
-            error: error.name(),
-        }
+        ErrorResponse::new(status_code.as_u16(), error.to_string(), error.name())
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, new)]
 pub struct ErrorResponse {
+    #[new(value = "false")]
+    pub status: bool,
     code: u16,
     error: String,
     message: String,
