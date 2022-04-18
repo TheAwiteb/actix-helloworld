@@ -1,5 +1,6 @@
+use super::errors::{AppError, ErrorResponse};
 use super::querys::NameQuery;
-use super::schemas::{MessageSchema, RouteSchema, RoutesSchema, ParamsSchema};
+use super::schemas::{MessageSchema, ParamsSchema, RouteSchema, RoutesSchema};
 use actix_web::*;
 
 /// Index endpoint `</api>`.
@@ -8,11 +9,28 @@ use actix_web::*;
 #[get("/api")]
 pub async fn index() -> impl Responder {
     let routes = RoutesSchema::new(vec![
-        RouteSchema::new("/api".to_owned(), "Explanation of all endpoints".to_owned(), None),
-        RouteSchema::new("/api/hello-world".to_owned(), "Hello world endpoint".to_owned(), None),
-        RouteSchema::new("/api/hello".to_owned(), "Say hello to user".to_owned(), Some(vec![
-            ParamsSchema::new("name".to_owned(), "Name of user".to_owned(), true)
-        ])),
+        RouteSchema::new(
+            "/api".to_owned(),
+            "Explanation of all endpoints".to_owned(),
+            None,
+            None,
+        ),
+        RouteSchema::new(
+            "/api/hello-world".to_owned(),
+            "Hello world endpoint".to_owned(),
+            None,
+            None,
+        ),
+        RouteSchema::new(
+            "/api/hello".to_owned(),
+            "Say hello to user".to_owned(),
+            Some(vec![ParamsSchema::new(
+                "name".to_owned(),
+                "Name of user".to_owned(),
+                true,
+            )]),
+            Some(vec![ErrorResponse::from(&AppError::LongUsername)]),
+        ),
     ]);
     web::Json(routes)
 }
@@ -30,9 +48,13 @@ pub async fn hello_world() -> impl Responder {
 /// Return [`MessageSchema`] with `Hello {name}` if there name
 /// or `Hello Guest` if not
 #[get("/api/hello")]
-pub async fn hello(username: web::Query<NameQuery>) -> impl Responder {
-    web::Json(MessageSchema::new(format!(
-        "Hello {}",
-        username.name.as_ref().unwrap_or(&"Guest".to_owned())
-    )))
+pub async fn hello(username: web::Query<NameQuery>) -> Result<impl Responder, AppError> {
+    if username.name.is_some() && username.name.as_ref().unwrap().chars().count() > 30 {
+        Err(AppError::LongUsername)
+    } else {
+        Ok(web::Json(MessageSchema::new(format!(
+            "Hello {}",
+            username.name.as_ref().unwrap_or(&"Guest".to_owned())
+        ))))
+    }
 }

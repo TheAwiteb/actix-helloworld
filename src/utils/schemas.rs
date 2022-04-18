@@ -1,3 +1,4 @@
+use crate::utils::errors::ErrorResponse;
 use derive_new::new;
 use serde::Serialize;
 
@@ -5,7 +6,7 @@ use serde::Serialize;
 pub struct ParamsSchema {
     pub name: String,
     pub description: String,
-    pub optional: bool
+    pub optional: bool,
 }
 
 #[derive(Serialize, new)]
@@ -15,6 +16,7 @@ pub struct RouteSchema {
     pub endpoint: String,
     pub description: String,
     pub parameters: Option<Vec<ParamsSchema>>,
+    pub errors: Option<Vec<ErrorResponse>>,
 }
 
 #[derive(Serialize, new)]
