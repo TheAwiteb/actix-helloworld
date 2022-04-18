@@ -1,5 +1,5 @@
 use super::querys::NameQuery;
-use super::schemas::{MessageSchema, RouteSchema, RoutesSchema};
+use super::schemas::{MessageSchema, RouteSchema, RoutesSchema, ParamsSchema};
 use actix_web::*;
 
 /// Index endpoint `</api>`.
@@ -8,9 +8,11 @@ use actix_web::*;
 #[get("/api")]
 pub async fn index() -> impl Responder {
     let routes = RoutesSchema::new(vec![
-        RouteSchema::new("/api".to_owned(), "Explanation of all endpoints".to_owned()),
-        RouteSchema::new("/api/hello-world".to_owned(), "Hello world endpoint".to_owned()),
-        RouteSchema::new("/api/hello".to_owned(), "Say hello to user".to_owned()),
+        RouteSchema::new("/api".to_owned(), "Explanation of all endpoints".to_owned(), None),
+        RouteSchema::new("/api/hello-world".to_owned(), "Hello world endpoint".to_owned(), None),
+        RouteSchema::new("/api/hello".to_owned(), "Say hello to user".to_owned(), Some(vec![
+            ParamsSchema::new("name".to_owned(), "Name of user".to_owned(), true)
+        ])),
     ]);
     web::Json(routes)
 }
