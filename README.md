@@ -25,17 +25,45 @@ cargo run
 
 ## Endpoints
 
-### /api
-#### Description:
-Explanation of all endpoints
-
-### /api/hello-world
-#### Description:
-Hello world endpoint
-
-### /api/hello
-#### Description:
-Say hello to user
+```json
+{
+  "endpoints":[
+    {
+      "status":true,
+      "endpoint":"/api",
+      "description":"Explanation of all endpoints",
+      "parameters":null,
+      "errors":null
+    },
+    {
+      "status":true,
+      "endpoint":"/api/hello-world",
+      "description":"Hello world endpoint",
+      "parameters":null,
+      "errors":null
+    },
+    {
+      "status":true,
+      "endpoint":"/api/hello",
+      "description":"Say hello to user",
+      "parameters":[
+        {
+          "name":"name",
+          "description":"Name of user",
+          "optional":true
+        }
+      ],
+      "errors":[
+        {
+          "code":400,
+          "error":"LongUsername",
+          "message":"The username should be smaller than 30 character"
+        }
+      ]
+    }
+  ]
+}
+```
 
 ## License
 actix-helloworld license is [MIT], license file [`LICENSE`]
