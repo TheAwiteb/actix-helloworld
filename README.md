@@ -27,23 +27,21 @@ cargo run
 
 ```json
 {
+  "status":true,
   "endpoints":[
     {
-      "status":true,
       "endpoint":"/api",
       "description":"Explanation of all endpoints",
       "parameters":null,
       "errors":null
     },
     {
-      "status":true,
       "endpoint":"/api/hello-world",
       "description":"Hello world endpoint",
       "parameters":null,
       "errors":null
     },
     {
-      "status":true,
       "endpoint":"/api/hello",
       "description":"Say hello to user",
       "parameters":[
@@ -55,9 +53,10 @@ cargo run
       ],
       "errors":[
         {
+          "status":false,
           "code":400,
-          "error":"LongUsername",
-          "message":"The username should be smaller than 30 character"
+          "error":"The username should be smaller than 30 character",
+          "message":"LongUsername"
         }
       ]
     }
