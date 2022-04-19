@@ -1,3 +1,2 @@
-mod schemas;
-
-pub use schemas::*;
+pub mod querys;
+pub mod routes;
