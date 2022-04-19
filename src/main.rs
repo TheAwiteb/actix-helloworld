@@ -2,9 +2,7 @@ mod api;
 mod errors;
 mod schemas;
 
-use actix_web::web::scope;
 use actix_web::*;
-use api::{hello, hello_world, index};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -20,12 +18,8 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             // This middleware to remove end slash from url if its there
             .wrap(middleware::NormalizePath::trim())
-            .service(
-                scope("/api")
-                    .service(index)
-                    .service(hello_world)
-                    .service(hello),
-            )
+            // Get App configuration
+            .configure(api::configuration::config_routes)
     })
     .bind((host.as_str(), port.parse().unwrap_or(8080)))?
     .run()
