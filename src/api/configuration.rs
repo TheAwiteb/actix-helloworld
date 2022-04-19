@@ -8,6 +8,10 @@ pub fn config_routes(cfg: &mut ServiceConfig) {
         web::scope("/api")
             .service(web::resource("").route(web::get().to(api::index)))
             .service(web::resource("/hello-world").route(web::get().to(api::hello_world)))
-            .service(web::resource("/hello").route(web::get().to(api::hello))),
+            .service(
+                web::resource("/hello")
+                    .route(web::get().to(api::hello_get))
+                    .route(web::post().to(api::hello_post)),
+            ),
     );
 }
