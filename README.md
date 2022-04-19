@@ -31,18 +31,21 @@ cargo run
   "endpoints":[
     {
       "endpoint":"/api",
+      "method":"GET",
       "description":"Explanation of all endpoints",
       "parameters":null,
       "errors":null
     },
     {
       "endpoint":"/api/hello-world",
+      "method":"GET",
       "description":"Hello world endpoint",
       "parameters":null,
       "errors":null
     },
     {
       "endpoint":"/api/hello",
+      "method":"GET",
       "description":"Say hello to user",
       "parameters":[
         {
@@ -55,8 +58,28 @@ cargo run
         {
           "status":false,
           "code":400,
-          "error":"The username should be smaller than 30 character",
-          "message":"LongUsername"
+          "error":"LongUsername",
+          "message":"The username should be smaller than 30 character"
+        }
+      ]
+    },
+    {
+      "endpoint":"/api/hello",
+      "method":"GET",
+      "description":"Say hello to user",
+      "parameters":[
+        {
+          "name":"name",
+          "description":"Name of user",
+          "optional":true
+        }
+      ],
+      "errors":[
+        {
+          "status":false,
+          "code":400,
+          "error":"LongUsername",
+          "message":"The username should be smaller than 30 character"
         }
       ]
     }
