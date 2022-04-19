@@ -31,7 +31,7 @@ impl ResponseError for AppError {
 impl From<&AppError> for ErrorResponse {
     fn from(error: &AppError) -> Self {
         let status_code = error.status_code();
-        ErrorResponse::new(status_code.as_u16(), error.to_string(), error.name())
+        ErrorResponse::new(status_code.as_u16(), error.name(), error.to_string())
     }
 }
 
