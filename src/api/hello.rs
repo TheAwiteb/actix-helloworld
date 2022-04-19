@@ -1,4 +1,4 @@
-use crate::{errors::AppError, schemas::MessageSchema, utils::querys::NameQuery};
+use crate::{errors::AppError, schemas::querys::NameQuery, schemas::routes::MessageSchema};
 use actix_web::{get, web, Responder};
 
 /// Say hello to name `</api/hello?name=<user name>>`.

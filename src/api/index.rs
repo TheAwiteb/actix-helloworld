@@ -1,6 +1,6 @@
 use crate::{
     errors::{AppError, ErrorResponse},
-    schemas::{ParamsSchema, RouteSchema, RoutesSchema},
+    schemas::routes::{ParamsSchema, RouteSchema, RoutesSchema},
 };
 use actix_web::{get, web, Responder};
 

@@ -1,4 +1,4 @@
-use crate::schemas::MessageSchema;
+use crate::schemas::routes::MessageSchema;
 use actix_web::{get, web, Responder};
 
 /// Hello world endpoint `</api/hello-world>`.

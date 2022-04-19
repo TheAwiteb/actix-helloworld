@@ -1,7 +1,6 @@
 mod api;
 mod errors;
 mod schemas;
-mod utils;
 
 use actix_web::web::scope;
 use actix_web::*;
