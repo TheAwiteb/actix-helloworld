@@ -1,14 +1,13 @@
-use actix_web::{web, Responder, get};
 use crate::{
-    schemas::{RoutesSchema, RouteSchema, ParamsSchema},
-    errors::{ErrorResponse, AppError}
+    errors::{AppError, ErrorResponse},
+    schemas::{ParamsSchema, RouteSchema, RoutesSchema},
 };
-
+use actix_web::{get, web, Responder};
 
 /// Index endpoint `</api>`.
 ///
 /// Return [`RoutesSchema`] with all endpoints
-#[get("/api")]
+#[get("")]
 pub async fn index() -> impl Responder {
     let routes = RoutesSchema::new(vec![
         RouteSchema::new(
