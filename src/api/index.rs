@@ -31,6 +31,17 @@ fn routes() -> RoutesSchema {
             )]),
             Some(vec![ErrorResponse::from(&AppError::LongUsername)]),
         ),
+        RouteSchema::new(
+            "/api/hello".to_owned(),
+            "GET".to_owned(),
+            "Say hello to user".to_owned(),
+            Some(vec![ParamsSchema::new(
+                "name".to_owned(),
+                "Name of user".to_owned(),
+                true,
+            )]),
+            Some(vec![ErrorResponse::from(&AppError::LongUsername)]),
+        ),
     ])
 }
 
@@ -49,7 +60,7 @@ mod tests {
     use crate::api::configuration::config_routes;
     use crate::schemas::routes::RoutesSchema;
     use actix_web::{http::StatusCode, test, App};
-    use serde_json::{to_string};
+    use serde_json::to_string;
 
     #[actix_web::test]
     async fn test_index_get() {
@@ -63,6 +74,7 @@ mod tests {
 
         assert_eq!(
             to_string(&body).unwrap(),
-            to_string(&super::routes()).unwrap());
+            to_string(&super::routes()).unwrap()
+        );
     }
 }
