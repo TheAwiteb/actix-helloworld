@@ -44,6 +44,7 @@ pub async fn hello_post(username: web::Json<NameQuery>) -> Result<impl Responder
 mod tests {
     use crate::api::configuration::config_routes;
     use crate::errors::{AppError, ErrorResponse};
+    use crate::schemas::querys::NameQuery;
     use crate::schemas::routes::MessageSchema;
     use actix_web::{http::StatusCode, test, App};
     use serde_json::to_string;
@@ -88,6 +89,68 @@ mod tests {
         let app = test::init_service(App::new().configure(config_routes)).await;
         let req = test::TestRequest::get()
             .uri(&format!("/api/hello?name={}", long_name))
+            .to_request();
+        let res = test::call_service(&app, req).await;
+
+        assert_eq!(res.status(), StatusCode::BAD_REQUEST);
+
+        let body: ErrorResponse = test::read_body_json(res).await;
+
+        assert_eq!(
+            to_string(&body).unwrap(),
+            to_string(&ErrorResponse::from(&AppError::LongUsername)).unwrap()
+        );
+    }
+
+    #[actix_web::test]
+    async fn test_hello_post() {
+        let app = test::init_service(App::new().configure(config_routes)).await;
+        let req = test::TestRequest::post()
+            .uri("/api/hello")
+            .set_json(NameQuery { name: None })
+            .to_request();
+        let res = test::call_service(&app, req).await;
+
+        assert_eq!(res.status(), StatusCode::OK);
+
+        let body: MessageSchema = test::read_body_json(res).await;
+
+        assert_eq!(
+            to_string(&body).unwrap(),
+            to_string(&MessageSchema::new("Hello Guest".to_owned())).unwrap()
+        );
+    }
+
+    #[actix_web::test]
+    async fn test_hello_post_with_payload() {
+        let app = test::init_service(App::new().configure(config_routes)).await;
+        let req = test::TestRequest::post()
+            .uri("/api/hello")
+            .set_json(NameQuery {
+                name: Some("Awiteb".to_owned()),
+            })
+            .to_request();
+        let res = test::call_service(&app, req).await;
+
+        assert_eq!(res.status(), StatusCode::OK);
+
+        let body: MessageSchema = test::read_body_json(res).await;
+
+        assert_eq!(
+            to_string(&body).unwrap(),
+            to_string(&MessageSchema::new("Hello Awiteb".to_owned())).unwrap()
+        );
+    }
+
+    #[actix_web::test]
+    async fn test_hello_post_long_name_error() {
+        let long_name = "a".repeat(31);
+        let app = test::init_service(App::new().configure(config_routes)).await;
+        let req = test::TestRequest::post()
+            .uri("/api/hello")
+            .set_json(NameQuery {
+                name: Some(long_name),
+            })
             .to_request();
         let res = test::call_service(&app, req).await;
 
