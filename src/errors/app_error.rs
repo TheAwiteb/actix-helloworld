@@ -1,6 +1,6 @@
 use actix_web::{error::ResponseError, http::StatusCode, HttpResponse};
 use derive_new::new;
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -35,7 +35,7 @@ impl From<&AppError> for ErrorResponse {
     }
 }
 
-#[derive(Serialize, new)]
+#[derive(Serialize, Deserialize, new)]
 pub struct ErrorResponse {
     #[new(value = "false")]
     pub status: bool,
