@@ -8,18 +8,21 @@ fn routes() -> RoutesSchema {
     RoutesSchema::new(vec![
         RouteSchema::new(
             "/api".to_owned(),
+            "GET".to_owned(),
             "Explanation of all endpoints".to_owned(),
             None,
             None,
         ),
         RouteSchema::new(
             "/api/hello-world".to_owned(),
+            "GET".to_owned(),
             "Hello world endpoint".to_owned(),
             None,
             None,
         ),
         RouteSchema::new(
             "/api/hello".to_owned(),
+            "GET".to_owned(),
             "Say hello to user".to_owned(),
             Some(vec![ParamsSchema::new(
                 "name".to_owned(),
@@ -32,6 +35,8 @@ fn routes() -> RoutesSchema {
 }
 
 /// Index endpoint `</api>`.
+///
+/// Method: GET
 ///
 /// Return [`RoutesSchema`] with all endpoints
 pub async fn index() -> impl Responder {

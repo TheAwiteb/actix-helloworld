@@ -3,6 +3,8 @@ use actix_web::{web, Responder};
 
 /// Say hello to name `</api/hello?name=<user name>>`.
 ///
+/// Method: GET
+///
 /// Return [`MessageSchema`] with `Hello {name}` if there name
 /// or `Hello Guest` if not
 pub async fn hello(username: web::Query<NameQuery>) -> Result<impl Responder, AppError> {

@@ -12,6 +12,7 @@ pub struct ParamsSchema {
 #[derive(Serialize, Deserialize,  new)]
 pub struct RouteSchema {
     pub endpoint: String,
+    pub method: String,
     pub description: String,
     pub parameters: Option<Vec<ParamsSchema>>,
     pub errors: Option<Vec<ErrorResponse>>,

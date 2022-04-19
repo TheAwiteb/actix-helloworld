@@ -3,6 +3,8 @@ use actix_web::{web, Responder};
 
 /// Hello world endpoint `</api/hello-world>`.
 ///
+/// Method: GET
+///
 /// Return [`MessageSchema`] with `Hello World!`
 pub async fn hello_world() -> impl Responder {
     web::Json(MessageSchema::new("Hello World!".to_owned()))
