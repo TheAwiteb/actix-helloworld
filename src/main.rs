@@ -1,6 +1,10 @@
+mod api;
+mod errors;
+mod schemas;
 mod utils;
+
 use actix_web::*;
-use utils::endpoints::{hello, hello_world, index};
+use api::{hello, hello_world, index};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

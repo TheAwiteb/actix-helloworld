@@ -1,4 +1,4 @@
-use crate::utils::errors::ErrorResponse;
+use crate::errors::ErrorResponse;
 use derive_new::new;
 use serde::Serialize;
 
