@@ -1,3 +1,4 @@
+pub mod configuration;
 mod hello;
 mod hello_world;
 mod index;
