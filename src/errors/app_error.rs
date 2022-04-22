@@ -9,6 +9,8 @@ pub enum AppError {
     LongUsername,
     #[error("There is no endpoint in this path")]
     NotFound,
+    #[error("{0}")]
+    BadRequest(String),
 }
 
 #[derive(Serialize, Deserialize, new)]
@@ -25,6 +27,7 @@ impl AppError {
         match self {
             Self::LongUsername => "LongUsername".to_owned(),
             Self::NotFound => "NotFound".to_owned(),
+            Self::BadRequest(_) => "BadRequest".to_owned(),
         }
     }
 }
@@ -32,7 +35,7 @@ impl AppError {
 impl ResponseError for AppError {
     fn status_code(&self) -> StatusCode {
         match *self {
-            Self::LongUsername => StatusCode::BAD_REQUEST,
+            Self::LongUsername | Self::BadRequest(_) => StatusCode::BAD_REQUEST,
             Self::NotFound => StatusCode::NOT_FOUND,
         }
     }
