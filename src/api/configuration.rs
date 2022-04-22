@@ -5,6 +5,9 @@ use actix_web::web::ServiceConfig;
 use actix_web::{error, ResponseError};
 
 /// Make App routes configuration
+/// with NotFound endpoint [`not_found`]
+///
+/// [`not_found`]: crate::api::not_found()
 pub fn config_routes(cfg: &mut ServiceConfig) {
     cfg.service(
         web::scope("/api")

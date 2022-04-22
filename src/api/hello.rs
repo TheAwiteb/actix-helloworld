@@ -21,9 +21,21 @@ fn hello(query: NameQuery) -> Result<impl Responder, AppError> {
     Ok(web::Json(MessageSchema::new("Hello Guest".to_owned())))
 }
 
-/// Say hello to name `</api/hello?name=<user name>>`.
+/// Say hello to name.
+///
+/// Endpoint: `/api/hello?name=<user name>`
 ///
 /// Method: GET
+///
+/// Request: [`NameQuery`]
+///
+/// Response: [`MessageSchema`]
+///
+/// Errors:
+/// * Will return [`LongUsername`] in [`ErrorResponse`] if username bigger than 30 character
+///
+/// [`LongUsername`]: crate::errors::AppError::LongUsername
+/// [`ErrorResponse`]: crate::errors::ErrorResponse
 ///
 /// Return [`MessageSchema`] with `Hello {name}` if there name
 /// or `Hello Guest` if not
@@ -31,11 +43,24 @@ pub async fn hello_get(username: web::Query<NameQuery>) -> Result<impl Responder
     hello(username.0)
 }
 
-/// Say hello to name `</api/hello>`.
+/// Say hello to name.
+///
+/// Endpoint: `/api/hello`
 ///
 /// Method: POST
 ///
-/// Return [`MessageSchema`] with `Hello {name}`
+/// Request: [`NameQuery`]
+///
+/// Response: [`MessageSchema`]
+///
+/// Errors:
+/// * Will return [`LongUsername`] in [`ErrorResponse`] if username bigger than 30 character
+///
+/// [`LongUsername`]: crate::errors::AppError::LongUsername
+/// [`ErrorResponse`]: crate::errors::ErrorResponse
+///
+/// Return [`MessageSchema`] with `Hello {name}` if there name
+/// or `Hello Guest` if not
 pub async fn hello_post(username: web::Json<NameQuery>) -> Result<impl Responder, AppError> {
     hello(username.0)
 }

@@ -45,9 +45,15 @@ fn routes() -> RoutesSchema {
     ])
 }
 
-/// Index endpoint `</api>`.
+/// Index endpoint.
+///
+/// Endpoint: `/api`
 ///
 /// Method: GET
+///
+/// Request: Nothing
+///
+/// Response: [`RoutesSchema`]
 ///
 /// Return [`RoutesSchema`] with all endpoints
 pub async fn index() -> impl Responder {

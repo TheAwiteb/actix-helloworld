@@ -1,7 +1,17 @@
 use crate::errors::AppError;
 use actix_web::{Responder, ResponseError};
 
-// Not found response
+/// Not found response
+///
+/// Endpoint: Anything else
+///
+/// Method: Any
+///
+/// Request: Any
+///
+/// Response: [`ErrorResponse`]
+///
+/// [`ErrorResponse`]: crate::errors::ErrorResponse
 pub async fn not_found() -> impl Responder {
     AppError::NotFound.error_response()
 }

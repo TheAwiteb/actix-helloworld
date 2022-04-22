@@ -1,9 +1,15 @@
 use crate::schemas::routes::MessageSchema;
 use actix_web::{web, Responder};
 
-/// Hello world endpoint `</api/hello-world>`.
+/// Hello world endpoint.
+///
+/// Endpoint: `/api/hello-world`
 ///
 /// Method: GET
+///
+/// Request: Nothing
+///
+/// Response: [`MessageSchema`]
 ///
 /// Return [`MessageSchema`] with `Hello World!`
 pub async fn hello_world() -> impl Responder {

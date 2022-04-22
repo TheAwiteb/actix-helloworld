@@ -1,3 +1,6 @@
+#![allow(rustdoc::private_intra_doc_links)]
+#![doc = include_str!("../doc.md")]
+
 mod api;
 mod errors;
 mod schemas;
@@ -18,7 +21,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             // This middleware to remove end slash from url if its there
             .wrap(middleware::NormalizePath::trim())
-            // Get App configuration
+            // Add Api configuration
             .configure(api::configuration::config_routes)
     })
     .bind((host.as_str(), port.parse().unwrap_or(8080)))?
