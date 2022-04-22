@@ -10,6 +10,11 @@ pub async fn hello_world() -> impl Responder {
     web::Json(MessageSchema::new("Hello World!".to_owned()))
 }
 
+/// `/hello-world` initialize
+pub fn init(cfg: &mut web::ServiceConfig) {
+    cfg.service(web::resource("/hello-world").route(web::get().to(hello_world)));
+}
+
 #[cfg(test)]
 mod tests {
     use crate::api::configuration::config_routes;

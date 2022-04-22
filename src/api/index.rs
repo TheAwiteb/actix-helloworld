@@ -55,6 +55,11 @@ pub async fn index() -> impl Responder {
     web::Json(routes)
 }
 
+/// Api index endpoint initialize
+pub fn init(cfg: &mut web::ServiceConfig) {
+    cfg.service(web::resource("").route(web::get().to(index)));
+}
+
 #[cfg(test)]
 mod tests {
     use crate::api::configuration::config_routes;

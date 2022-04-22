@@ -10,6 +10,7 @@ pub fn config_routes(cfg: &mut ServiceConfig) {
         web::scope("/api")
             // Set 404 service
             .default_service(web::route().to(api::not_found))
+            // Set json payload error
             .app_data(web::JsonConfig::default().error_handler(|err, _req| {
                 error::InternalError::from_response(
                     "",
@@ -17,12 +18,11 @@ pub fn config_routes(cfg: &mut ServiceConfig) {
                 )
                 .into()
             }))
-            .service(web::resource("").route(web::get().to(api::index)))
-            .service(web::resource("/hello-world").route(web::get().to(api::hello_world)))
-            .service(
-                web::resource("/hello")
-                    .route(web::get().to(api::hello_get))
-                    .route(web::post().to(api::hello_post)),
-            ),
+            // Index initialize
+            .configure(api::index::init)
+            // hello initialize
+            .configure(api::hello::init)
+            // hello-world initialize
+            .configure(api::hello_world::init),
     );
 }

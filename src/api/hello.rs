@@ -40,6 +40,15 @@ pub async fn hello_post(username: web::Json<NameQuery>) -> Result<impl Responder
     hello(username.0)
 }
 
+/// `/hello` endpoint initialize
+pub fn init(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::resource("/hello")
+            .route(web::get().to(hello_get))
+            .route(web::post().to(hello_post)),
+    );
+}
+
 #[cfg(test)]
 mod tests {
     use crate::api::configuration::config_routes;
